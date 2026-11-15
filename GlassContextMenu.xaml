@@ -1,0 +1,142 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="ElektraGlassContextMenu" TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background" Value="#EA0B1120" />
+        <Setter Property="Foreground" Value="#F1F5F9" />
+        <Setter Property="BorderBrush" Value="#5538BDF8" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="Segoe UI Variable Text, Segoe UI" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="14"
+                            Padding="6"
+                            SnapsToDevicePixels="True">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" BlurRadius="18" ShadowDepth="4" Opacity="0.65" />
+                        </Border.Effect>
+                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ElektraGlassSeparator" TargetType="{x:Type Separator}">
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Margin" Value="8,4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Border Height="1" Background="#2694A3B8" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ElektraGlassMenuItem" TargetType="{x:Type MenuItem}">
+        <Setter Property="Foreground" Value="#E2E8F0" />
+        <Setter Property="Padding" Value="10,7" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Border x:Name="ItemBorder"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Margin="0,1"
+                            Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Path x:Name="CheckMark"
+                                  Grid.Column="0"
+                                  Data="M 1,5 L 4.5,8.5 L 10,1.5"
+                                  Stroke="#38BDF8"
+                                  StrokeThickness="1.8"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Left"
+                                  Visibility="Collapsed" />
+
+                            <ContentPresenter Grid.Column="1"
+                                              ContentSource="Header"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True" />
+
+                            <TextBlock x:Name="ShortcutText"
+                                       Grid.Column="2"
+                                       Text="{TemplateBinding InputGestureText}"
+                                       Foreground="#64748B"
+                                       FontSize="11"
+                                       Margin="16,0,0,0"
+                                       VerticalAlignment="Center" />
+
+                            <Path x:Name="SubmenuArrow"
+                                  Grid.Column="2"
+                                  Data="M 0,0 L 4,4 L 0,8"
+                                  Stroke="#94A3B8"
+                                  StrokeThickness="1.5"
+                                  Margin="14,0,2,0"
+                                  VerticalAlignment="Center"
+                                  Visibility="Collapsed" />
+
+                            <Popup x:Name="PART_Popup"
+                                   AllowsTransparency="True"
+                                   Placement="Right"
+                                   HorizontalOffset="4"
+                                   VerticalOffset="-4"
+                                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Focusable="False"
+                                   PopupAnimation="Fade">
+                                <Border Background="#EA0B1120"
+                                        BorderBrush="#5538BDF8"
+                                        BorderThickness="1"
+                                        CornerRadius="12"
+                                        Padding="6"
+                                        MaxWidth="280">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="#000000" BlurRadius="16" ShadowDepth="4" Opacity="0.65" />
+                                    </Border.Effect>
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Role" Value="SubmenuHeader">
+                            <Setter TargetName="SubmenuArrow" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="ShortcutText" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="#2638BDF8" />
+                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#5538BDF8" />
+                            <Setter Property="Foreground" Value="#FFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#475569" />
+                            <Setter Property="Cursor" Value="Arrow" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

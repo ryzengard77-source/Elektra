@@ -1,0 +1,21 @@
+name: Windows build and tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore
+        run: dotnet restore .\Elektra.sln
+      - name: Build Release
+        run: dotnet build .\Elektra.sln --configuration Release --no-restore
+      - name: Run tests
+        run: dotnet test .\tests\Elektra.Tests\Elektra.Tests.csproj --configuration Release --no-build --no-restore
